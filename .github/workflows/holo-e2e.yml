@@ -1,0 +1,23 @@
+name: Holo-E2E
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  holo-e2e:
+    uses: awesome-os/maintenance-workflows/.github/workflows/reusable-holo-e2e.yml@v1
+    with:
+      config-path: holo-ci.json
+      holo-ci-ref: v1
+      e2e-command: |
+        node dashboards/build-dashboards.mts
+        node --test packages/browser-use/browser-use.test.mts packages/zer0q-substrate/deadhand-and-cli.test.mts
+        cp -f dashboards/index.html "$HOLO_E2E_ARTIFACTS/agent-platform-dashboard.html"
