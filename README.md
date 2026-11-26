@@ -7,6 +7,7 @@
 [![Persistent Agent Host](https://img.shields.io/badge/Runtime-Persistent_Agent_Host-3FB950?style=for-the-badge)](https://b8g.dev/awesome-os/apps/agent-host.html)
 [![Live Oversight Telemetry](https://img.shields.io/badge/Telemetry-Holo_v11_Oversight-58A6FF?style=for-the-badge)](https://b8g.dev/awesome-os/apps/oversight.html)
 [![CI Workflow](https://img.shields.io/github/actions/workflow/status/awesome-os/agent-platform/ci.yml?label=CI&style=for-the-badge)](.github/workflows/ci.yml)
+[![Holo-CI](https://img.shields.io/github/actions/workflow/status/awesome-os/agent-platform/holo-ci.yml?label=holo-ci%40v1&style=for-the-badge)](.github/workflows/holo-ci.yml)
 [![Model Atlas](https://img.shields.io/badge/Atlas-Sovereign_Models-F778BA?style=for-the-badge)](models/README.md)
 
 ---
@@ -63,7 +64,7 @@ All dashboards are zero-dependency static HTML bundles built deterministically f
 - **Sectium Unified Interaction Shell:** [dashboards/sectium-shell.html](dashboards/sectium-shell.html) — generated from [packages/agent-host/sectium-shell-html.mts](packages/agent-host/sectium-shell-html.mts).
 - **Holo `v11` Live Oversight Telemetry:** [dashboards/oversight.html](dashboards/oversight.html) ([Live App](https://b8g.dev/awesome-os/apps/oversight.html)) — planetary CAS & upstream library tracker.
 - **Fleet Host Manager Console:** [dashboards/host-manager.html](dashboards/host-manager.html) — 4-column device & MDM control plane.
-- **Dashboard Materializer & CI:** [dashboards/build-dashboards.mts](dashboards/build-dashboards.mts) · [package.json](package.json) · [.github/workflows/ci.yml](.github/workflows/ci.yml).
+- **Dashboard Materializer & CI:** [dashboards/build-dashboards.mts](dashboards/build-dashboards.mts) · [package.json](package.json) · [.github/workflows/ci.yml](.github/workflows/ci.yml) · **`holo-ci@v1`** ([.github/workflows/holo-ci.yml](.github/workflows/holo-ci.yml) · [holo-ci.json](holo-ci.json)).
 
 ```bash
 # Node 24+ native TypeScript (zero build/transpile step, zero npm runtime deps)
@@ -158,7 +159,7 @@ Unified protocol layer ([packages/protocols/index.mts](packages/protocols/index.
 
 ### Research Dossiers & Architecture Guides
 
-- [GitHub 141-Repo Consolidation Map (`122` active + `19` archived)](research/GITHUB-141-REPOS-CONSOLIDATION-MAP.md)
+- [GitHub 141-Repo Consolidation Map (pre-consolidation baseline: `141`; post-consolidation: `52 active / 92 archived`)](research/GITHUB-141-REPOS-CONSOLIDATION-MAP.md)
 - [Composable `.b8p` Micro-MoE Research Paper (`53.74 KB`, `0.682 ms`, `3 ms` crystallization)](research/COMPOSABLE-B8P-MICRO-MOE-PAPER.md)
 - [Universal Algebraic Error-Loop LSP for Small Models (Dossier 06)](research/06-universal-algebraic-error-loop-lsp-for-small-models.md)
 - [Zero-Q Autonomous Agent Runner & Substrate Plan (`ZER0Q` / `SKIMMER` / `DEADHAND`)](research/ZERO-Q-AGENT-RUNNER-PLATFORM-PLAN.md)
