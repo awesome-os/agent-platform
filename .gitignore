@@ -1,0 +1,7 @@
+.b8g-cas/
+node_modules/
+dist/
+.zig-cache/
+zig-out/
+*.log
+.DS_Store

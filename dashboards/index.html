@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AwesomeOS Agent Platform — Unified Control Center</title>
+<style>
+  :root {
+    --bg: #0e1116;
+    --bg-radial:
+      radial-gradient(circle at 14% 6%, rgba(57, 197, 207, 0.14), transparent 36%),
+      radial-gradient(circle at 88% 12%, rgba(167, 139, 250, 0.14), transparent 40%),
+      #0e1116;
+    --surface: rgba(20, 25, 34, 0.84);
+    --surface-solid: #141922;
+    --surface-2: rgba(28, 35, 48, 0.9);
+    --line: rgba(148, 163, 184, 0.18);
+    --line-hi: rgba(57, 197, 207, 0.48);
+    --ink: #ecf2f8;
+    --muted: #8f9bb0;
+    --cyan: #39c5cf;
+    --cyan-soft: rgba(57, 197, 207, 0.14);
+    --purple: #a78bfa;
+    --purple-soft: rgba(167, 139, 250, 0.15);
+    --ok: #3fb950;
+    --ok-soft: rgba(63, 185, 80, 0.15);
+    --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "Cascadia Code", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg-radial);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 13.5px;
+    overflow: hidden;
+  }
+  b8g-surface, b8g-section, b8g-stream { display: block; }
+  a { color: var(--cyan); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .shell {
+    display: grid;
+    grid-template-columns: 264px minmax(0, 1fr);
+    grid-template-rows: 54px minmax(0, 1fr);
+    height: 100vh;
+  }
+
+  /* Topbar */
+  .topbar {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 18px;
+    background: rgba(14, 17, 22, 0.9);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 14.5px;
+    letter-spacing: 0.2px;
+  }
+  .logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 900;
+    color: #06181b;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    box-shadow: 0 0 18px rgba(57, 197, 207, 0.35);
+  }
+  .brand-sub {
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 12px;
+  }
+  .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+  .pill.ok {
+    background: var(--ok-soft);
+    border-color: rgba(63, 185, 80, 0.42);
+    color: #7ee787;
+  }
+  .pill.cyan {
+    background: var(--cyan-soft);
+    border-color: rgba(57, 197, 207, 0.42);
+    color: #8eeaf0;
+  }
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ok);
+    box-shadow: 0 0 8px var(--ok);
+  }
+  .btn {
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 6px 11px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover {
+    border-color: var(--cyan);
+    background: rgba(57, 197, 207, 0.12);
+  }
+  .btn.primary {
+    background: linear-gradient(135deg, rgba(57, 197, 207, 0.25), rgba(167, 139, 250, 0.25));
+    border-color: var(--line-hi);
+  }
+
+  /* Left Navigation Rail */
+  .rail {
+    background: rgba(16, 20, 28, 0.88);
+    backdrop-filter: blur(12px);
+    border-right: 1px solid var(--line);
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+  }
+  .rail-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 10px 10px 4px;
+  }
+  .nav-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 9px 11px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--muted);
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+  .nav-btn:hover {
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--line);
+  }
+  .nav-btn.active {
+    color: #ffffff;
+    background: linear-gradient(135deg, rgba(57, 197, 207, 0.18), rgba(167, 139, 250, 0.18));
+    border-color: var(--line-hi);
+    box-shadow: 0 0 18px rgba(57, 197, 207, 0.12);
+  }
+  .nav-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.12);
+    color: var(--muted);
+  }
+  .nav-btn.active .nav-tag {
+    background: rgba(57, 197, 207, 0.22);
+    color: #a5f3fc;
+  }
+  .rail-foot {
+    margin-top: auto;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .rail-foot code {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--cyan);
+  }
+
+  /* Stage */
+  .stage {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .view-pane {
+    display: none;
+    height: 100%;
+    width: 100%;
+  }
+  .view-pane.active {
+    display: block;
+  }
+  .overview-scroll {
+    height: 100%;
+    overflow-y: auto;
+    padding: 22px 24px 48px;
+  }
+  .hero {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px 24px;
+    background: linear-gradient(135deg, rgba(57, 197, 207, 0.13), rgba(167, 139, 250, 0.13)), var(--surface);
+    backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+  }
+  .hero p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 760px;
+    line-height: 1.55;
+  }
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .kpi {
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    padding: 14px 16px;
+    background: var(--surface);
+  }
+  .kpi-val {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--cyan);
+    font-variant-numeric: tabular-nums;
+  }
+  .kpi-lbl {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    background: var(--surface);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .card:hover {
+    border-color: var(--line-hi);
+    transform: translateY(-1px);
+  }
+  .card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .card-title {
+    font-weight: 700;
+    font-size: 14.5px;
+    color: var(--ink);
+  }
+  .chip {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--purple-soft);
+    color: #ddd6fe;
+    border: 1px solid rgba(167, 139, 250, 0.35);
+  }
+  .chip.cyan {
+    background: var(--cyan-soft);
+    color: #99f6e4;
+    border-color: rgba(57, 197, 207, 0.35);
+  }
+  .card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12.8px;
+    line-height: 1.5;
+  }
+  .card-meta {
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid rgba(148, 163, 184, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--cyan);
+  }
+  .frame-wrap {
+    width: 100%;
+    height: 100%;
+    background: #0b0e14;
+  }
+  .frame-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: #0b0e14;
+  }
+  @media (max-width: 860px) {
+    .shell { grid-template-columns: 1fr; grid-template-rows: 54px auto 1fr; }
+    .rail { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+    .rail-label, .rail-foot { display: none; }
+    .nav-btn { width: auto; white-space: nowrap; }
+  }
+</style>
+</head>
+<body>
+<b8g-surface data-surface="agent-platform-control-center" data-abi="0x33564742">
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">AP</span>
+      <span>AwesomeOS Agent Platform</span>
+      <span class="brand-sub">Unified Sovereign Control Center</span>
+    </div>
+    <div class="top-actions">
+      <span class="pill ok"><span class="dot"></span> B8G_ABI_MAGIC_V3 · 0x33564742</span>
+      <span class="pill cyan" id="active-surface-pill">Overview &amp; Architecture</span>
+      <button class="btn" id="btn-reload" type="button" title="Reload active surface">↻ Reload View</button>
+      <button class="btn primary" id="btn-popout" type="button" title="Open active dashboard in new tab">↗ Open Tab</button>
+    </div>
+  </header>
+
+  <nav class="rail" aria-label="Agent Platform Navigation">
+    <div class="rail-label">Architecture</div>
+    <button class="nav-btn active" type="button" data-tab="overview" data-label="Overview &amp; Architecture">
+      <span>◈ Overview &amp; Architecture</span>
+      <span class="nav-tag">8 pillars</span>
+    </button>
+
+    <div class="rail-label">Interactive Consoles</div>
+    <button class="nav-btn" type="button" data-tab="llm-studio" data-src="./llm-studio.html" data-label="LLM &amp; LoRA Studio">
+      <span>🧠 LLM &amp; LoRA Studio</span>
+      <span class="nav-tag">:7497</span>
+    </button>
+    <button class="nav-btn" type="button" data-tab="agent-host" data-src="./agent-host.html" data-label="Persistent Agent Host">
+      <span>⚡ Persistent Agent Host</span>
+      <span class="nav-tag">:7498</span>
+    </button>
+    <button class="nav-btn" type="button" data-tab="sectium-shell" data-src="./sectium-shell.html" data-label="Sectium Shell">
+      <span>🖥 Sectium Shell</span>
+      <span class="nav-tag">UI-in-UI</span>
+    </button>
+
+    <div class="rail-label">Fleet &amp; Planetary CAS</div>
+    <button class="nav-btn" type="button" data-tab="oversight" data-src="./oversight.html" data-label="Live Oversight Telemetry">
+      <span>📡 Live Oversight</span>
+      <span class="nav-tag">v11 CAS</span>
+    </button>
+    <button class="nav-btn" type="button" data-tab="host-manager" data-src="./host-manager.html" data-label="Fleet Host Manager">
+      <span>🛡 Fleet Host Manager</span>
+      <span class="nav-tag">MDM</span>
+    </button>
+
+    <div class="rail-foot">
+      <div><strong>Zero-Dependency Stack</strong></div>
+      <div>Strict <code>erasableSyntaxOnly</code> · <code>B8G_ARENA_V1</code> 64B · <code>v11</code> SHA-512 CAS</div>
+    </div>
+  </nav>
+
+  <main class="stage">
+    <section class="view-pane active overview-scroll" id="pane-overview">
+      <div class="hero">
+        <div>
+          <h1>Sovereign Agent Platform Control Center</h1>
+          <p>
+            Unified Model Research, Boundary-Verified MoE, ZER0Q Sub-ms CAS/KV Substrate,
+            AtlasKV Hierarchical Memory, LLM/LoRA Studio, Governance &amp; Model Armor,
+            and A2A/MCP/A2UI/x402 Interoperability — running zero-copy over <code>B8G_ARENA_V1</code>.
+          </p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn primary" type="button" data-jump="llm-studio">Launch LLM Studio</button>
+          <button class="btn" type="button" data-jump="agent-host">Launch Agent Host</button>
+          <button class="btn" type="button" data-jump="oversight">Open Oversight</button>
+        </div>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi">
+          <div class="kpi-val">25.1× / -98.2%</div>
+          <div class="kpi-lbl">AtlasKV HiKVP Speedup &amp; VRAM Savings</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val">53.7 KB</div>
+          <div class="kpi-lbl">Micro-MoE 5-Head INT8 (0.682 ms)</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val">&lt; 2 ms</div>
+          <div class="kpi-lbl">ZER0Q SKIMMER CAS Short-Circuit</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val">0.1–0.5 BPW</div>
+          <div class="kpi-lbl">LittleBit / NanoQuant Sub-1-Bit Edge</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val">3 ms</div>
+          <div class="kpi-lbl">Online Micro-MoE Crystallization</div>
+        </div>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="card-head">
+            <span class="card-title">Model Garden &amp; Ops IR</span>
+            <span class="chip cyan">packages/model-ops</span>
+          </div>
+          <p>
+            Curated Semantics of Operations IR and deterministic stamper for <strong>Inkling 2 Mini</strong> (26.4B / 3.4B looped core),
+            <strong>B8G Xenon 1B</strong> (Kalaschnikow tapered), <strong>LittleBit / NanoQuant</strong>, and <strong>B8G Sovereign MoE v1</strong>.
+          </p>
+          <div class="card-meta"><span>models/ + packages/models-hub</span><span>64B Arena Slabs</span></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <span class="card-title">Boundary-Verified MoE Gate</span>
+            <span class="chip">packages/moe-gate</span>
+          </div>
+          <p>
+            Every MoE expert is a <code>B8G-SECT-1</code> Section guarded by Ingress/Egress finite + L2 energy bounds,
+            <code>CapabilityToken</code> scope enforcement, automatic expert quarantine, and symbolic safe gates.
+          </p>
+          <div class="card-meta"><span>B8gVerifiedMoERouter</span><span>Web TransformStream</span></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <span class="card-title">ZER0Q Substrate (CAS + KV)</span>
+            <span class="chip cyan">packages/zer0q-substrate</span>
+          </div>
+          <p>
+            Sub-millisecond <strong>SKIMMER</strong> pre-flight input-digest short-circuit, immutable SHA-512 Holo <code>v11</code> CAS snapshots,
+            and optimistic <strong>DEADHAND</strong> lease &amp; idempotency counters.
+          </p>
+          <div class="card-meta"><span>0 LLM Tokens on Hit</span><span>Replayable Runs</span></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <span class="card-title">AtlasKV Hierarchical Memory</span>
+            <span class="chip">packages/atlas-kv</span>
+          </div>
+          <p>
+            <code>KG2KV</code> triple encoder + 2-level <code>HiKvpArena</code> pruning in flat <code>Float32Array</code> memory.
+            Achieves <strong>25.1×</strong> speedup, <strong>-98.2%</strong> active VRAM, and <strong>100%</strong> top-1 recall with tenant isolation.
+          </p>
+          <div class="card-meta"><span>arXiv:2510.17934</span><span>CapabilityToken&lt;TID&gt;</span></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <span class="card-title">Micro-MoE 53 KB &amp; App-Dedup 41 KB</span>
+            <span class="chip cyan">packages/micro-moe</span>
+          </div>
+          <p>
+            L1/L2 cache-resident INT8 multi-head MLPs with Bloom-filter OOD gating and <strong>3 ms</strong> online <code>crystallize()</code>.
+            5-head OS algebra router (100% val acc) + 3-head disk path classifier (97.62% val acc).
+          </p>
+          <div class="card-meta"><span>53.74 KB / 41.20 KB</span><span>&lt; 1 ms CPU Infer</span></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <span class="card-title">SpinWave Neuromorphic MoE</span>
+            <span class="chip">packages/spinwave-moe</span>
+          </div>
+          <p>
+            Lock-free magnonic phasor superposition bus over <code>SharedArrayBuffer</code> (<code>B8G_ABI_MAGIC_V3 = 0x33564742</code>)
+            with seqlock epoch reads, Gilbert damping, and orthogonal FDM expert routing.
+          </p>
+          <div class="card-meta"><span>64B Cache-Line Cells</span><span>Zero False Sharing</span></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <span class="card-title">Governance &amp; Model Armor</span>
+            <span class="chip cyan">packages/governance</span>
+          </div>
+          <p>
+            Ed25519 Verified Agent Registry, Agent Gateway Policy enforcement, Model Armor prompt/egress boundary guards,
+            and Algebraic Error-Loop LSP (<code>packages/error-loop-lsp</code>) bounded K-pass verification.
+          </p>
+          <div class="card-meta"><span>Ed25519 Attested</span><span>LSP 3.17 Deltas</span></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <span class="card-title">A2A / MCP / A2UI / x402</span>
+            <span class="chip">packages/protocols</span>
+          </div>
+          <p>
+            Full-stack agentic interoperability: Agent-to-Agent (A2A) discovery &amp; task framing, Model Context Protocol (MCP),
+            HTML5 <code>&lt;b8g-*&gt;</code> A2UI declarative surfaces, and <code>x402</code> BaaS/CaaS micropayment settlement.
+          </p>
+          <div class="card-meta"><span>x402-BaaS-mcp</span><span>HTML5 &lt;b8g-*&gt;</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="view-pane frame-wrap" id="pane-llm-studio"></section>
+    <section class="view-pane frame-wrap" id="pane-agent-host"></section>
+    <section class="view-pane frame-wrap" id="pane-sectium-shell"></section>
+    <section class="view-pane frame-wrap" id="pane-oversight"></section>
+    <section class="view-pane frame-wrap" id="pane-host-manager"></section>
+  </main>
+</div>
+</b8g-surface>
+<script>
+(() => {
+  const buttons = Array.from(document.querySelectorAll('.nav-btn[data-tab]'));
+  const jumpButtons = Array.from(document.querySelectorAll('[data-jump]'));
+  const panes = new Map();
+  for (const el of document.querySelectorAll('.view-pane')) {
+    panes.set(el.id.replace('pane-', ''), el);
+  }
+  const activePill = document.getElementById('active-surface-pill');
+  const reloadBtn = document.getElementById('btn-reload');
+  const popoutBtn = document.getElementById('btn-popout');
+
+  let currentTab = 'overview';
+  let currentSrc = null;
+
+  function ensureFrame(tabId, src) {
+    const pane = panes.get(tabId);
+    if (!pane || !src) return null;
+    let frame = pane.querySelector('iframe');
+    if (!frame) {
+      frame = document.createElement('iframe');
+      frame.src = src;
+      frame.title = tabId;
+      frame.loading = 'eager';
+      pane.appendChild(frame);
+    }
+    return frame;
+  }
+
+  function activateTab(tabId) {
+    const btn = buttons.find((b) => b.dataset.tab === tabId);
+    if (!btn) return;
+    currentTab = tabId;
+    currentSrc = btn.dataset.src || null;
+
+    for (const b of buttons) b.classList.toggle('active', b === btn);
+    for (const [id, pane] of panes.entries()) pane.classList.toggle('active', id === tabId);
+
+    if (activePill) activePill.textContent = btn.dataset.label || tabId;
+    if (currentSrc) ensureFrame(tabId, currentSrc);
+
+    try {
+      history.replaceState(null, '', '#' + tabId);
+    } catch {}
+  }
+
+  for (const btn of buttons) {
+    btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+  }
+  for (const jBtn of jumpButtons) {
+    jBtn.addEventListener('click', () => activateTab(jBtn.dataset.jump));
+  }
+
+  if (reloadBtn) {
+    reloadBtn.addEventListener('click', () => {
+      if (!currentSrc) return;
+      const pane = panes.get(currentTab);
+      const frame = pane && pane.querySelector('iframe');
+      if (frame) frame.src = currentSrc;
+    });
+  }
+
+  if (popoutBtn) {
+    popoutBtn.addEventListener('click', () => {
+      window.open(currentSrc || window.location.href, '_blank', 'noopener');
+    });
+  }
+
+  const initialHash = (window.location.hash || '').replace(/^#/, '');
+  if (initialHash && panes.has(initialHash)) {
+    activateTab(initialHash);
+  }
+})();
+</script>
+</body>
+</html>

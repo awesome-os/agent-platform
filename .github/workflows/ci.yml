@@ -1,0 +1,32 @@
+name: AwesomeOS Agent Platform CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Verify C11 Model Ops ABI Header
+        run: cc -std=c11 -Wall -Wextra -Werror -fsyntax-only -x c packages/model-ops/b8g_model_ops_abi.h
+
+      - name: Build Dashboards
+        run: npm run build:dashboards
+
+      - name: Run Unit Test Suites
+        run: npm test
+
+      - name: Run Platform Tutorials
+        run: npm run tutorials
