@@ -127,12 +127,16 @@ describe('packages/zer0q-substrate — Secret Redactor, DeadhandController & CLI
       });
       assert.equal(firstRun.status, 'COMMITTED');
 
+      // Prime V8 TurboFan / OS page cache, then measure steady-state SKIMMER short-circuit (< 2 ms SLA)
+      await runner.run(manifest, () => {
+        throw new Error('Executor must not run on SKIMMER hit');
+      });
       const shortCircuit = await runner.run(manifest, () => {
         throw new Error('Executor must not run on SKIMMER hit');
       });
       assert.equal(shortCircuit.status, 'CACHE_HIT');
       assert.equal(shortCircuit.tokensUsed, 0);
-      assert.ok(shortCircuit.latencyMs < 2.0, `Expected < 2 ms short-circuit, got ${shortCircuit.latencyMs} ms`);
+      assert.ok(shortCircuit.latencyMs < 2.0, `Expected < 2 ms steady-state short-circuit, got ${shortCircuit.latencyMs} ms`);
     } finally {
       fs.rmSync(tmpDir, { recursive: true, force: true });
     }
