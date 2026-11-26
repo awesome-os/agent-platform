@@ -1,6 +1,6 @@
 {
   "name": "@awesome-os/agent-platform",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Sovereign Agent Platform Monorepo — Foundation Models, Boundary-Verified MoE, ZER0Q CAS/KV Substrate, AtlasKV, LLM/LoRA Studio, Brain RAG, Pinokio Recipes, MCP/A2A/A2UI/x402 Protocols, Dashboards & Model Research",
   "type": "module",
   "license": "MIT AND BSD-3-Clause",
