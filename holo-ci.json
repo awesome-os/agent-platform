@@ -1,0 +1,16 @@
+{
+  "schema": "holo-ci.v1",
+  "name": "agent-platform",
+  "kind": "monorepo",
+  "tests": [
+    "node --test packages/browser-use/browser-use.test.mts",
+    "node --test packages/zer0q-substrate/deadhand-and-cli.test.mts"
+  ],
+  "docs": [
+    "README.md"
+  ],
+  "guards": {
+    "zeroGhost": true,
+    "zeroCasV1": true
+  }
+}
