@@ -16,6 +16,7 @@ import { createHash, randomBytes } from 'node:crypto';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { performance } from 'node:perf_hooks';
+import { redactValue } from './secret-redactor.mts';
 
 // ============================================================================
 // 1. Canonical JSON & SHA-512 Digests
@@ -460,6 +461,18 @@ export class SubstrateKvStore {
     return existing;
   }
 
+  public listLeaseRunIds(): readonly string[] {
+    return Object.freeze(Array.from(this.leases.keys()));
+  }
+
+  public listAllLeases(): readonly LeaseRecord[] {
+    return Object.freeze(Array.from(this.leases.values()));
+  }
+
+  public restoreLease(lease: LeaseRecord): void {
+    this.leases.set(lease.runId, Object.freeze({ ...lease }));
+  }
+
   public reapExpiredLeases(nowMs: number = Date.now()): readonly LeaseRecord[] {
     const reaped: LeaseRecord[] = [];
     for (const [runId, lease] of this.leases.entries()) {
@@ -808,19 +821,21 @@ export class Zer0qRunner {
         Object.keys(rawRes as Record<string, unknown>).every(
           (k) => k === 'output' || k === 'tokensUsed',
         );
-      const output = isEnvelope ? (rawRes as Zer0qExecutorOutput<T>).output : (rawRes as T);
+      const rawOutput = isEnvelope ? (rawRes as Zer0qExecutorOutput<T>).output : (rawRes as T);
       const tokensUsed = isEnvelope
         ? ((rawRes as Zer0qExecutorOutput<T>).tokensUsed ?? trackedTokens)
         : trackedTokens;
 
-      const commitRecord: Zer0qCommitRecord<T> = {
+      const rawCommitRecord: Zer0qCommitRecord<T> = {
         runId,
         inputDigest,
         manifest,
-        output,
+        output: rawOutput,
         tokensUsed,
         committedAt: Date.now(),
       };
+      const commitRecord = redactValue(rawCommitRecord).redacted;
+      const output = commitRecord.output;
       const putRes = this.cas.put(commitRecord);
       this.cas.pin(putRes.sha512, runId);
       this.skimmerCache.set(inputDigest, { outputDigest: putRes.sha512, record: commitRecord });
@@ -885,7 +900,8 @@ export class Zer0qRunner {
     });
 
     if (opts?.executor) {
-      const replayOutput = await opts.executor(hydrated);
+      const rawReplayOutput = await opts.executor(hydrated);
+      const replayOutput = redactValue(rawReplayOutput).redacted;
       const putRes = this.cas.put({
         replayedFrom: digest,
         model: opts.modelOverride ?? record.manifest.execution.model,

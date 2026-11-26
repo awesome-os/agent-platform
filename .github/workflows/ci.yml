@@ -25,8 +25,13 @@ jobs:
       - name: Build Dashboards
         run: npm run build:dashboards
 
-      - name: Run Unit Test Suites
+      - name: Run Unit Test Suites (incl. browser-use & zer0q deadhand/cli)
         run: npm test
+
+      - name: Verify ZER0Q CLI & Browser-Use / Deadhand Suites
+        run: |
+          node packages/zer0q-substrate/cli.mts --help --json > /dev/null
+          node --test packages/browser-use/browser-use.test.mts packages/zer0q-substrate/deadhand-and-cli.test.mts
 
       - name: Run Platform Tutorials
         run: npm run tutorials
