@@ -7,13 +7,13 @@
 ## Install & Run
 
 ```powershell
-# Windows (PowerShell)
-irm https://awesome-os.com/install.ps1 | iex
+# Windows (Web OOBE Installer & Launcher: https://awesome-os.github.io/installer/)
+irm https://raw.githubusercontent.com/awesome-os/installer/main/START-HERE.bat -OutFile START-HERE.bat; .\START-HERE.bat
 ```
 
 ```bash
 # Linux / macOS
-curl -fsSL https://awesome-os.com/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/awesome-os/installer/main/start-here.sh | sh
 ```
 
 ```powershell
