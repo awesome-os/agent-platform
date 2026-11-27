@@ -2,10 +2,10 @@
 
 > **The Sovereign, Zero-Dependency AI & Autonomous Agent Platform** — unifying **Foundation Models & Sub-1-Bit / Micro-MoE Runtimes**, **Boundary-Verified MoE Gates**, **ZER0Q Sub-ms CAS/KV Substrate**, **AtlasKV Hierarchical Memory (`25.1×` faster / `-98.2%` VRAM)**, **LLM & LoRA Studio**, **Persistent Multi-UI Agent Host**, **Model Armor Governance**, and **A2A / MCP / A2UI / x402** protocols atop `B8G_ABI_MAGIC_V3` (`0x33564742`) and Holo `v11` CAS.
 
-[![Unified Control Center](https://img.shields.io/badge/Live-Agent_Platform_Hub-39C5CF?style=for-the-badge)](https://b8g.dev/awesome-os/apps/agent-platform.html)
-[![LLM & LoRA Studio](https://img.shields.io/badge/Studio-LLM_%26_LoRA_5--Tab-A78BFA?style=for-the-badge)](https://b8g.dev/awesome-os/apps/llm-studio.html)
-[![Persistent Agent Host](https://img.shields.io/badge/Runtime-Persistent_Agent_Host-3FB950?style=for-the-badge)](https://b8g.dev/awesome-os/apps/agent-host.html)
-[![Live Oversight Telemetry](https://img.shields.io/badge/Telemetry-Holo_v11_Oversight-58A6FF?style=for-the-badge)](https://b8g.dev/awesome-os/apps/oversight.html)
+[![Unified Control Center](https://img.shields.io/badge/Live-Agent_Platform_Hub-39C5CF?style=for-the-badge)](https://awesome-os.github.io/agent-platform/)
+[![LLM & LoRA Studio](https://img.shields.io/badge/Studio-LLM_%26_LoRA_5--Tab-A78BFA?style=for-the-badge)](https://awesome-os.github.io/agent-platform/llm-studio.html)
+[![Persistent Agent Host](https://img.shields.io/badge/Runtime-Persistent_Agent_Host-3FB950?style=for-the-badge)](https://awesome-os.github.io/agent-platform/agent-host.html)
+[![Live Oversight Telemetry](https://img.shields.io/badge/Telemetry-Holo_v11_Oversight-58A6FF?style=for-the-badge)](https://awesome-os.github.io/holo-v11/oversight.html)
 [![CI Workflow](https://img.shields.io/github/actions/workflow/status/awesome-os/agent-platform/ci.yml?label=CI&style=for-the-badge)](.github/workflows/ci.yml)
 [![Holo-CI](https://img.shields.io/github/actions/workflow/status/awesome-os/agent-platform/holo-ci.yml?label=holo-ci%40v1&style=for-the-badge)](.github/workflows/holo-ci.yml)
 [![Model Atlas](https://img.shields.io/badge/Atlas-Sovereign_Models-F778BA?style=for-the-badge)](models/README.md)
@@ -56,13 +56,13 @@ flowchart LR
 
 ## Getting Started & Live Dashboards
 
-All dashboards are zero-dependency static HTML bundles built deterministically from TypeScript tagged templates (`dashboards/build-dashboards.mts`) and served live at **`b8g.dev`**:
+All dashboards are zero-dependency static HTML bundles built deterministically from TypeScript tagged templates (`dashboards/build-dashboards.mts`) and served live via **GitHub Pages** (`https://awesome-os.github.io/agent-platform/`):
 
-- **Unified Agent Platform Control Center:** [dashboards/index.html](dashboards/index.html) ([Live Portal](https://b8g.dev/awesome-os/apps/agent-platform.html)) — dark-glass navigation rail switching across Architecture Overview, LLM Studio, Agent Host, Sectium Shell, Oversight Telemetry, and Fleet Host Manager.
-- **Sovereign LLM & LoRA Studio (`:7497`):** [dashboards/llm-studio.html](dashboards/llm-studio.html) ([Live App](https://b8g.dev/awesome-os/apps/llm-studio.html)) — generated from [packages/llm-studio/ui-html.mts](packages/llm-studio/ui-html.mts).
-- **Persistent Multi-UI Agent Host (`:7498`):** [dashboards/agent-host.html](dashboards/agent-host.html) ([Live App](https://b8g.dev/awesome-os/apps/agent-host.html)) — generated from [packages/agent-host/ui-html.mts](packages/agent-host/ui-html.mts).
+- **Unified Agent Platform Control Center:** [dashboards/index.html](dashboards/index.html) ([Live Portal](https://awesome-os.github.io/agent-platform/)) — dark-glass navigation rail switching across Architecture Overview, LLM Studio, Agent Host, Sectium Shell, Oversight Telemetry, and Fleet Host Manager.
+- **Sovereign LLM & LoRA Studio (`:7497`):** [dashboards/llm-studio.html](dashboards/llm-studio.html) ([Live App](https://awesome-os.github.io/agent-platform/llm-studio.html)) — generated from [packages/llm-studio/ui-html.mts](packages/llm-studio/ui-html.mts).
+- **Persistent Multi-UI Agent Host (`:7498`):** [dashboards/agent-host.html](dashboards/agent-host.html) ([Live App](https://awesome-os.github.io/agent-platform/agent-host.html)) — generated from [packages/agent-host/ui-html.mts](packages/agent-host/ui-html.mts).
 - **Sectium Unified Interaction Shell:** [dashboards/sectium-shell.html](dashboards/sectium-shell.html) — generated from [packages/agent-host/sectium-shell-html.mts](packages/agent-host/sectium-shell-html.mts).
-- **Holo `v11` Live Oversight Telemetry:** [dashboards/oversight.html](dashboards/oversight.html) ([Live App](https://b8g.dev/awesome-os/apps/oversight.html)) — planetary CAS & upstream library tracker.
+- **Holo `v11` Live Oversight Telemetry:** [dashboards/oversight.html](dashboards/oversight.html) ([Live App](https://awesome-os.github.io/holo-v11/oversight.html)) — planetary CAS & upstream library tracker.
 - **Fleet Host Manager Console:** [dashboards/host-manager.html](dashboards/host-manager.html) — 4-column device & MDM control plane.
 - **Dashboard Materializer & CI:** [dashboards/build-dashboards.mts](dashboards/build-dashboards.mts) · [package.json](package.json) · [.github/workflows/ci.yml](.github/workflows/ci.yml) · **`holo-ci@v1`** ([.github/workflows/holo-ci.yml](.github/workflows/holo-ci.yml) · [holo-ci.json](holo-ci.json)).
 
