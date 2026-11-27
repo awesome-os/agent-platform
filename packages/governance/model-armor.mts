@@ -40,6 +40,13 @@ export interface BloomOodResult {
 /**
  * Compact multi-hash Bloom filter over character trigrams for `< 1 ms` OOD gating.
  */
+export interface BloomOodGateOptions {
+  readonly bitCount?: number;
+  readonly numHashes?: number;
+  readonly threshold?: number;
+  readonly seedCorpus?: readonly string[];
+}
+
 export class BloomOodGate {
   public readonly bitCount: number;
   public readonly numHashes: number;
@@ -47,12 +54,7 @@ export class BloomOodGate {
   private readonly bits: Uint8Array;
   private trainedCount = 0;
 
-  constructor(opts?: {
-    readonly bitCount?: number;
-    readonly numHashes?: number;
-    readonly threshold?: number;
-    readonly seedCorpus?: readonly string[];
-  }) {
+  constructor(opts?: BloomOodGateOptions) {
     this.bitCount = opts?.bitCount ?? 4096;
     this.numHashes = opts?.numHashes ?? 3;
     this.threshold = opts?.threshold ?? 0.35;

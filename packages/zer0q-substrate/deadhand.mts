@@ -64,6 +64,12 @@ export interface PersistedDeadhandState {
  *  - TTL lease heartbeat & automatic orphan reaper
  *  - Deterministic `replay(runId, overrideModel?)`
  */
+export interface DeadhandControllerOptions {
+  readonly cas: SubstrateCasStore;
+  readonly kv?: SubstrateKvStore;
+  readonly runner?: Zer0qRunner;
+}
+
 export class DeadhandController {
   public readonly cas: SubstrateCasStore;
   public readonly kv: SubstrateKvStore;
@@ -72,11 +78,7 @@ export class DeadhandController {
   private readonly aliasHistory = new Map<string, string[]>();
   private reaperTimer: ReturnType<typeof setInterval> | null = null;
 
-  constructor(opts: {
-    readonly cas: SubstrateCasStore;
-    readonly kv?: SubstrateKvStore;
-    readonly runner?: Zer0qRunner;
-  }) {
+  constructor(opts: DeadhandControllerOptions) {
     this.cas = opts.cas;
     this.kv = opts.kv ?? new SubstrateKvStore();
     this.runner = opts.runner ?? new Zer0qRunner(this.cas, this.kv);

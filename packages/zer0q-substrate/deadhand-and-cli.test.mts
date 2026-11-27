@@ -17,13 +17,13 @@ import { assertNoSecrets, redactString, redactValue } from './secret-redactor.mt
 
 describe('packages/zer0q-substrate — Secret Redactor, DeadhandController & CLI', () => {
   it('secret-redactor strips API keys, Bearer tokens, ghp_/github_pat_, TWITCH_STREAM_KEY, and PEM blocks', () => {
-    const fakeGithubClassic = 'ghp_1234567890abcdefghijklmnop';
-    const fakeGithubPat = 'github_pat_11ABCDEFG0123456789_abcdef1234567890';
+    const fakeGithubClassic = 'ghp_1234567890abcdefghijklmnop'; // holo-ci-allow-secret
+    const fakeGithubPat = 'github_pat_11ABCDEFG0123456789_abcdef1234567890'; // holo-ci-allow-secret
     const fakeBearer = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.payload.sig';
     const fakeTwitchKey = 'live_987654321_abcdefABCDEF1234567890';
     const fakeOpenAiKey = 'sk-proj-abcdefghijklmnopqrstuvwxyz123456';
     const fakePem = [
-      '-----BEGIN RSA PRIVATE KEY-----',
+      '-----BEGIN RSA PRIVATE KEY-----', // holo-ci-allow-secret
       'MIIEowIBAAKCAQEAnFakeKeyMaterial0123456789',
       '-----END RSA PRIVATE KEY-----',
     ].join('\n');
@@ -64,7 +64,7 @@ describe('packages/zer0q-substrate — Secret Redactor, DeadhandController & CLI
       const kv = new SubstrateKvStore();
       const runner = new Zer0qRunner(cas, kv);
 
-      const fakeGithubClassic = 'ghp_1234567890abcdefghijklmnop';
+      const fakeGithubClassic = 'ghp_1234567890abcdefghijklmnop'; // holo-ci-allow-secret
       const fakeTwitchKey = 'live_987654321_abcdefABCDEF1234567890';
       const manifest: Zer0qJobManifest = {
         apiVersion: 'zer0q.awesome-os/v1',

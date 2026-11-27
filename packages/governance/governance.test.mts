@@ -53,7 +53,7 @@ describe('packages/governance — Ed25519 Registry, ModelArmor & AgentGatewayPol
     assert.ok(inj.injection.matches.some((m) => m.ruleId === 'INJ_IGNORE_PREVIOUS'));
 
     const secretInput =
-      'Use token ghp_1234567890abcdef1234567890abcdef1234 with AWS AKIAIOSFODNN7EXAMPLE ' +
+      'Use token ghp_1234567890abcdef1234567890abcdef1234 with AWS AKIAIOSFODNN7EXAMPLE ' + // holo-ci-allow-secret
       'and Bearer my.secret.jwt, email alice@example.com, SSN 123-45-6789, card 4111-1111-1111-1111';
     const red = armor.redactSecrets(secretInput);
     assert.equal(red.redactionCount, 6);

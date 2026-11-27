@@ -241,8 +241,8 @@ main = "src/missing.ts"
 compatibility_date = "2026-13-99"
 `,
       'src/secrets.ts': `export const k1 = "sk-live1234567890";
-export const k2 = "ghp_abcdef1234567890";
-export const k3 = "AKIAIOSFODNN7EXAMPLE";
+export const k2 = "ghp_abcdef1234567890"; // holo-ci-allow-secret
+export const k3 = "AKIAIOSFODNN7EXAMPLE"; // holo-ci-allow-secret
 `,
     };
     const deltas = adapter.check(files);

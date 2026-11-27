@@ -253,17 +253,19 @@ function nowMs(): number {
     : Date.now();
 }
 
+export interface DevOpsErrorHarnessOptions {
+  readonly encoder?: LumiBertEncoder;
+  readonly encoderConfig?: Partial<LumiBertConfig>;
+  readonly threshold?: number;
+  readonly seedDefaults?: boolean;
+}
+
 export class DevOpsErrorHarness {
   public readonly encoder: LumiBertEncoder;
   private readonly entries: IndexedFixEntry[] = [];
   private readonly defaultThreshold: number;
 
-  constructor(opts?: {
-    readonly encoder?: LumiBertEncoder;
-    readonly encoderConfig?: Partial<LumiBertConfig>;
-    readonly threshold?: number;
-    readonly seedDefaults?: boolean;
-  }) {
+  constructor(opts?: DevOpsErrorHarnessOptions) {
     this.encoder = opts?.encoder ?? new LumiBertEncoder(opts?.encoderConfig);
     this.defaultThreshold = opts?.threshold ?? DEFAULT_MATCH_THRESHOLD;
 

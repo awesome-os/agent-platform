@@ -260,7 +260,7 @@ describe('packages/browser-use — DOMTreeSerializer, Controller, Sectium Pipe &
         }
         return {
           action: 'done',
-          result: { summary: 'Done', leakedToken: 'ghp_1234567890abcdefghijklmnop' },
+          result: { summary: 'Done', leakedToken: 'ghp_1234567890abcdefghijklmnop' }, // holo-ci-allow-secret
           tokensUsed: 10,
         };
       },
@@ -271,7 +271,7 @@ describe('packages/browser-use — DOMTreeSerializer, Controller, Sectium Pipe &
     assert.equal(runRes.history.length, 2);
     assert.equal(runRes.tokensUsed, 55);
     assert.ok(streamed.length >= 4);
-    assert.equal(JSON.stringify(runRes.result).includes('ghp_1234567890'), false);
+    assert.equal(JSON.stringify(runRes.result).includes('ghp_1234567890'), false); // holo-ci-allow-secret
     for (const line of runRes.ndjson.split('\n')) {
       const parsed = JSON.parse(line) as { readonly seq: number; readonly inputDigest: string };
       assert.ok(parsed.seq >= 1);
