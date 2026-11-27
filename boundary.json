@@ -1,0 +1,29 @@
+{
+  "schema": "holo-boundary.v1",
+  "plane": 4,
+  "publicEntrypoints": [
+    "runtime/colibri/colibri-v11-bridge.mts"
+  ],
+  "includePaths": [
+    "dashboards",
+    "packages",
+    "runtime",
+    "tutorials"
+  ],
+  "excludeDirs": [
+    ".git",
+    "node_modules",
+    "build",
+    "dist",
+    "models",
+    ".awesome-oci",
+    ".holo-ci-runtime"
+  ],
+  "forbiddenImports": [
+    "WidevineCdm",
+    "optimization_guide_internal",
+    "GoogleUpdate"
+  ],
+  "maxParentTraversals": 4,
+  "scanSourceHttpIpc": false
+}

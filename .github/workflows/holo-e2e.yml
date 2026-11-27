@@ -17,6 +17,7 @@ jobs:
     with:
       config-path: holo-ci.json
       holo-ci-ref: v1
+      runner-tier: lite
       e2e-command: |
         node dashboards/build-dashboards.mts
         node --test packages/browser-use/browser-use.test.mts packages/zer0q-substrate/deadhand-and-cli.test.mts
