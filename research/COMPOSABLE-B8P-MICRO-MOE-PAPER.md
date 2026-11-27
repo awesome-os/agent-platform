@@ -1,3 +1,5 @@
+<!-- DOC-STATIC-CORPUS -->
+
 # Cache-Resident Composable Micro-MoE: Sub-Millisecond, Auditable, Self-Crystallizing `.b8p` Model Blocks on Zero-Copy Shared Memory (`B8G_ARENA_V1`)
 
 > **Author:** Frank Lemanschik & Awesome-OS Research Collective  

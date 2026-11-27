@@ -6,6 +6,8 @@ license: "Awesome-OS Sovereign"
 origin: "Awesome-OS Core (repository/model-kalaschnikow-v0.1-pre.1 + sections/atlas-kv)"
 ---
 
+<!-- DOC-STATIC-CORPUS -->
+
 # Model Spec 02 — B8G Xenon 1B / Kalaschnikow + AtlasKV
 
 > **Consolidated from:** Blog #15 ([`15-b8g-xenon-1b-cognitive-core-and-atlaskv-memory.md`](../awesome-os-development-history-blog/15-b8g-xenon-1b-cognitive-core-and-atlaskv-memory.md)), [`repository/model-kalaschnikow-v0.1-pre.1/`](../../repository/model-kalaschnikow-v0.1-pre.1/src/model.mts), and [`sections/atlas-kv/`](../../sections/atlas-kv/xenon-1b-inference.host.mts).

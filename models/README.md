@@ -5,6 +5,8 @@ updated: "2026-11-21"
 motto: "Nunquam ante, numquam iterum"
 ---
 
+<!-- DOC-STATIC-CORPUS -->
+
 # Awesome-OS Unified Model Architecture Atlas (`docs/models/`)
 
 > **Single Source of Truth for Model Implementation Details, Semantics of Operations, Research Model Stamping, and Boundary-Verified MoE Execution.**

@@ -5,6 +5,8 @@ updated: "2026-11-21"
 origin: "Samsung Research (NeurIPS / ICML)"
 ---
 
+<!-- DOC-STATIC-CORPUS -->
+
 # Model Spec 03 — Sub-1-Bit Quantization (`LittleBit` / `LittleBit-2` / `NanoQuant`)
 
 > **Consolidated from:** Blog #24 ([`24-sub-1-bit-llm-quantization-littlebit-and-b8g-edge-inference.md`](../awesome-os-development-history-blog/24-sub-1-bit-llm-quantization-littlebit-and-b8g-edge-inference.md)).

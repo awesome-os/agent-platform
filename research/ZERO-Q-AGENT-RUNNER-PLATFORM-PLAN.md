@@ -7,6 +7,8 @@ tags: ["antigravity", "gemini", "zero-q", "cas", "kv", "agent-runner", "unattend
 summary: "Detailed architectural specification, function surface, contract schema, and phased launch plan for pairing Antigravity + Gemini with a Zero-Q CAS + KV control plane."
 ---
 
+<!-- DOC-STATIC-CORPUS -->
+
 # Zero-Q Autonomous Agent Runner & Platform — Detailed Launch & Function Plan
 
 > **Core Thesis:** Pair **deterministic, sub-millisecond state resolution** (Zero-Q **CAS** + **KV**) directly underneath **non-deterministic, autonomous agent execution** (**Antigravity** managed Linux sandboxes + **Gemini** reasoning & tool loops).

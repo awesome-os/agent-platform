@@ -1,3 +1,5 @@
+<!-- DOC-STATIC-CORPUS -->
+
 # AwesomeOS GitHub Organization Consolidation Map (141-Repo Audit)
 
 > **Audit Scope:** `141` repositories across `github.com/awesome-os/*` (`122` active repositories including the unified `awesome-os/agent-platform` + `19` archived legacy/superseded repositories; `139` local mirrors synced in `e:\awesome-os\github-mirror\awesome-os\`, `116` baseline entries indexed in `github-mirror/manifest.json`).  

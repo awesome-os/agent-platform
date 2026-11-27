@@ -1,3 +1,5 @@
+<!-- DOC-STATIC-CORPUS -->
+
 # AwesomeOS Agent Platform (`awesome-os/agent-platform`)
 
 > **The Sovereign, Zero-Dependency AI & Autonomous Agent Platform** — unifying **Foundation Models & Sub-1-Bit / Micro-MoE Runtimes**, **Boundary-Verified MoE Gates**, **ZER0Q Sub-ms CAS/KV Substrate**, **AtlasKV Hierarchical Memory (`25.1×` faster / `-98.2%` VRAM)**, **LLM & LoRA Studio**, **Persistent Multi-UI Agent Host**, **Model Armor Governance**, and **A2A / MCP / A2UI / x402** protocols atop `B8G_ABI_MAGIC_V3` (`0x33564742`) and Holo `v11` CAS.

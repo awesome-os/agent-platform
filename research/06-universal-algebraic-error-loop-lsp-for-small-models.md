@@ -6,6 +6,8 @@ tags: ["error-loop", "lsp", "small-models", "algebraic-verification", "moe-gate"
 summary: "Formalization of the Universal Algebraic Error-Loop LSP (VerifyLoop(artifact, TargetAdapter) -> OK | StructuredDelta[]): how wrapping any legacy framework boundary in a sub-second deterministic verifier lets 1B-26B local models converge reliably on production apps and deployments without rewriting framework internals."
 ---
 
+<!-- DOC-STATIC-CORPUS -->
+
 # Research Dossier 06: Universal Algebraic Error-Loop LSP for Small Models
 
 **Category:** Verification-Guided Inference & Boundary-Adapter Formalization  

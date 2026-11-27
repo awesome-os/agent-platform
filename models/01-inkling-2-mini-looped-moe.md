@@ -6,6 +6,8 @@ license: "Apache-2.0"
 origin: "Thinking Machines Lab (@thinkymachines)"
 ---
 
+<!-- DOC-STATIC-CORPUS -->
+
 # Model Spec 01 — Inkling 2 Mini (Looped MoE Transformer)
 
 > **Upstream:** `thinkingmachines/Inkling-2-Mini` (Thinking Machines Lab, released November 2026, **Apache 2.0**)  
